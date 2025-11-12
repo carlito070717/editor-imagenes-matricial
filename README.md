@@ -9,6 +9,9 @@
 - **Profesor:** Jorge Javier Pedrozo Romero
 
 ---
+## Objetivo de la Documentación
+
+Su objetivo es aplicar las operaciones matriciales para desarrollar un programa, en este caso un editor de imágenes.
 
 ## 📋 Descripción del Proyecto
 

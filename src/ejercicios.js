@@ -1,9 +1,9 @@
 // ============================================
 // EDITOR DE IMÁGENES CON ÁLGEBRA MATRICIAL
 // ============================================
-// Nombre del estudiante: _________________
-// Fecha: _________________
-// Grupo: _________________
+// Nombre del estudiante: Carlos Alfonso Llanes
+// Fecha: 12/11/2025
+ // Grupo: C
 
 const { PNG } = require('pngjs');
 const fs = require('fs');
@@ -365,9 +365,20 @@ function convertirEscalaGrises(matriz) {
  * const espejo = voltearHorizontal(matriz);
  */
 function voltearHorizontal(matriz) {
-  // TODO: Implementar volteo horizontal
+  // Creo una matriz nueva para guardar el resultado
+  const resultado = [];
   
-  return []; // REEMPLAZAR
+  // Recorro cada fila de la imagen
+  for (let i = 0; i < matriz.length; i++) {
+    // Aquí está el truco: uso .reverse() para invertir cada fila
+    // .slice() primero hace una copia de la fila para no modificar la original
+    // Es como tomar [pixel1, pixel2, pixel3] y voltearlo a [pixel3, pixel2, pixel1]
+    // Así lo que estaba a la izquierda ahora está a la derecha (efecto espejo)
+    const filaVolteada = matriz[i].slice().reverse();
+    resultado.push(filaVolteada);
+  }
+  
+  return resultado;
 }
 
 /**
