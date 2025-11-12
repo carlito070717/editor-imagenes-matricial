@@ -316,9 +316,32 @@ function invertirColores(matriz) {
  * const grises = convertirEscalaGrises(matriz);
  */
 function convertirEscalaGrises(matriz) {
-  // TODO: Implementar conversión a escala de grises
+  // Copio la matriz original para no modificarla
+  const resultado = copiarMatriz(matriz);
   
-  return []; // REEMPLAZAR
+  // Recorro cada pixel de la imagen
+  for (let i = 0; i < resultado.length; i++) {
+    for (let j = 0; j < resultado[i].length; j++) {
+      // Aquí está la fórmula mágica del ojo humano
+      // Nuestros ojos son MÁS sensibles al verde (0.587), luego al rojo (0.299)
+      // y MENOS sensibles al azul (0.114)
+      // Por eso no es un simple promedio (R+G+B)/3, sino estos pesos especiales
+      const gris = 0.299 * matriz[i][j].r + 
+                   0.587 * matriz[i][j].g + 
+                   0.114 * matriz[i][j].b;
+      
+      // Pongo el mismo valor de gris en los tres canales RGB
+      // Cuando R=G=B el cerebro lo percibe como gris
+      resultado[i][j] = {
+        r: limitarValorColor(gris),
+        g: limitarValorColor(gris),
+        b: limitarValorColor(gris),
+        a: matriz[i][j].a  // La transparencia no cambia
+      };
+    }
+  }
+  
+  return resultado;
 }
 
 // ============================================
