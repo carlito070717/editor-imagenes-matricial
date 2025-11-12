@@ -397,9 +397,15 @@ function voltearHorizontal(matriz) {
  * const invertido = voltearVertical(matriz);
  */
 function voltearVertical(matriz) {
-  // TODO: Implementar volteo vertical
+  // Este es más simple que el horizontal
+  // Aquí no toco las filas individualmente, solo cambio su ORDEN
+  // Es como tomar todo el stack de filas y voltearlo de arriba a abajo
   
-  return []; // REEMPLAZAR
+  // .slice() hace una copia de la matriz completa (no modifica la original)
+  // .reverse() voltea el orden de las filas
+  // La primera fila ahora es la última, y la última es la primera
+  // Es como voltear una foto de cabeza
+  return matriz.slice().reverse();
 }
 
 /**
