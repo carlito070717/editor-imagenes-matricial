@@ -428,9 +428,31 @@ function voltearVertical(matriz) {
  * const rotada = rotar90Grados(matriz);
  */
 function rotar90Grados(matriz) {
-  // TODO: Implementar rotación de 90 grados
+  // PASO 1: TRANSPONER la matriz
+  // Transponer significa intercambiar filas por columnas
+  // Lo que estaba en posición [i][j] ahora va a [j][i]
+  // Básicamente "giras" la matriz en diagonal
   
-  return []; // REEMPLAZAR
+  const filas = matriz.length;
+  const columnas = matriz[0].length;
+  
+  // Creo una matriz nueva con dimensiones intercambiadas
+  // Si era 3x5 (3 filas, 5 columnas), ahora será 5x3
+  const transpuesta = [];
+  for (let j = 0; j < columnas; j++) {
+    const nuevaFila = [];
+    for (let i = 0; i < filas; i++) {
+      // Aquí está la magia: intercambio i y j
+      // Lo que estaba en matriz[i][j] ahora va a transpuesta[j][i]
+      nuevaFila.push(matriz[i][j]);
+    }
+    transpuesta.push(nuevaFila);
+  }
+  
+  // PASO 2: VOLTEAR HORIZONTAL
+  // Ahora uso la función que ya hicimos antes
+  // Esto completa la rotación de 90 grados
+  return voltearHorizontal(transpuesta);
 }
 
 // ============================================
