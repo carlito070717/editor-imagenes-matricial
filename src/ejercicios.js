@@ -242,7 +242,7 @@ function obtenerDimensionesImagen(rutaImagen) {
  * const oscuro = ajustarBrillo(matriz, 0.5);    // 50% más oscuro
  */
 function ajustarBrillo(matriz, factor) {
-  // Copio la matriz para no arruinar la original
+  // Copio la matriz para no romper la original
   const resultado = copiarMatriz(matriz);
   
   // Recorro cada pixel de la imagen
@@ -280,9 +280,25 @@ function ajustarBrillo(matriz, factor) {
  * // Rojo (255,0,0) → Cian (0,255,255)
  */
 function invertirColores(matriz) {
-  // TODO: Implementar inversión de colores
+  // Copio la matriz para no tocar la original
+  const resultado = copiarMatriz(matriz);
   
-  return []; // REEMPLAZAR
+  // Recorro cada pixel
+  for (let i = 0; i < resultado.length; i++) {
+    for (let j = 0; j < resultado[i].length; j++) {
+      // La magia está en restarle a 255 cada color
+      // Si un color era muy alto (claro), ahora será bajo (oscuro) y viceversa
+      // 255 - 255 = 0 (blanco se vuelve negro)
+      // 255 - 0 = 255 (negro se vuelve blanco)
+      // 255 - 200 = 55 (un color claro se vuelve oscuro)
+      resultado[i][j].r = limitarValorColor(255 - matriz[i][j].r);
+      resultado[i][j].g = limitarValorColor(255 - matriz[i][j].g);
+      resultado[i][j].b = limitarValorColor(255 - matriz[i][j].b);
+      // El alpha no se invierte, queremos mantener la transparencia igual
+    }
+  }
+  
+  return resultado;
 }
 
 /**
