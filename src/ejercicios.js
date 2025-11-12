@@ -542,9 +542,39 @@ function mezclarImagenes(matriz1, matriz2, factor) {
  * const vintage = aplicarSepia(matriz);
  */
 function aplicarSepia(matriz) {
-  // TODO: Implementar filtro sepia
+  // Copio la matriz para no tocar la original
+  const resultado = copiarMatriz(matriz);
   
-  return []; // REEMPLAZAR
+  // Recorro cada pixel
+  for (let i = 0; i < resultado.length; i++) {
+    for (let j = 0; j < resultado[i].length; j++) {
+      // Guardo los valores originales porque los voy a necesitar para calcular los 3 canales
+      const r_original = matriz[i][j].r;
+      const g_original = matriz[i][j].g;
+      const b_original = matriz[i][j].b;
+      
+      // Aplico la transformación sepia - cada nuevo color es una mezcla de los 3 originales
+      // Estas fórmulas crean ese tono marrón-amarillento de las fotos antiguas
+      // Los números vienen de estudios sobre cómo lucían las fotos en blanco y negro teñidas
+      
+      // Calculo el nuevo rojo (mucho verde original le da calidez)
+      const nuevoR = 0.393 * r_original + 0.769 * g_original + 0.189 * b_original;
+      
+      // Calculo el nuevo verde (balanceado entre los 3)
+      const nuevoG = 0.349 * r_original + 0.686 * g_original + 0.168 * b_original;
+      
+      // Calculo el nuevo azul (menos azul para dar ese tono café/amarillo)
+      const nuevoB = 0.272 * r_original + 0.534 * g_original + 0.131 * b_original;
+      
+      // Asigno los nuevos valores, limitándolos entre 0-255
+      resultado[i][j].r = limitarValorColor(nuevoR);
+      resultado[i][j].g = limitarValorColor(nuevoG);
+      resultado[i][j].b = limitarValorColor(nuevoB);
+      // El alpha no cambia
+    }
+  }
+  
+  return resultado;
 }
 
 /**
