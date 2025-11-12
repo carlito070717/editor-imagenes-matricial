@@ -233,7 +233,8 @@ git log --oneline --graph --decorate
 ## 📧 Contacto
 
 - **Email Institucional:** [carlos.llanes@tecdesoftware.edu.mx]
-- **GitHub:** [@carlito070717](https://github.com/carlito070717)
+- **GitHub:** [@carlito070717]
+[https://github.com/carlito070717]
 
 ---
 
