@@ -158,9 +158,32 @@ function matrizAImagen(matriz, rutaSalida) {
  * // Ahora será {r:200, g:200, b:200, a:255} (gris)
  */
 function obtenerCanal(matriz, canal) {
-  // TODO: Implementar extracción de canal
+  // Primero checo que me hayan pasado un canal válido (r, g o b)
+  if (!['r', 'g', 'b'].includes(canal)) {
+    throw new Error("El canal debe ser 'r', 'g', o 'b'");
+  }
   
-  return []; // REEMPLAZAR CON TU CÓDIGO
+  // Copio la matriz para no modificar la original
+  const resultado = copiarMatriz(matriz);
+  
+  // Recorro cada pixel de la imagen
+  for (let i = 0; i < resultado.length; i++) {
+    for (let j = 0; j < resultado[i].length; j++) {
+      // Agarro solo el valor del canal que me pidieron (ej: si es 'r', solo el rojo)
+      const valor = matriz[i][j][canal];
+      
+      // Hago que los tres canales RGB tengan el mismo valor
+      // Esto crea un gris porque cuando R=G=B obtienes un tono gris
+      resultado[i][j] = {
+        r: valor,
+        g: valor,
+        b: valor,
+        a: matriz[i][j].a  // La transparencia la dejo igual
+      };
+    }
+  }
+  
+  return resultado;
 }
 
 /**
