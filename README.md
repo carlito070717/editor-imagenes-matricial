@@ -1,7 +1,7 @@
 # 📘 Fundamentos de Álgebra - Práctica 2
 
 ## 👨‍💻 Información del Estudiante
-
+- **Nombre:** Carlos Alfonso Llanes
 - **Matrícula:** [SW2509003]
 - **Grupo:** [C]
 - **Cuatrimestre:** Primer Cuatrimestre
@@ -244,6 +244,6 @@ Este proyecto es parte de las actividades académicas del **Tecnológico de Soft
 
 **⭐ Si te gustó este proyecto, dale una estrella ⭐**
 
-Hecho con 💙 por [CarlosAlfonsoLlanes] - 2025
+Hecho con 💙 por Carlos Alfonso Llanes - 2025
 
 </div>
