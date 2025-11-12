@@ -242,9 +242,23 @@ function obtenerDimensionesImagen(rutaImagen) {
  * const oscuro = ajustarBrillo(matriz, 0.5);    // 50% más oscuro
  */
 function ajustarBrillo(matriz, factor) {
-  // TODO: Implementar ajuste de brillo
+  // Copio la matriz para no arruinar la original
+  const resultado = copiarMatriz(matriz);
   
-  return []; // REEMPLAZAR
+  // Recorro cada pixel de la imagen
+  for (let i = 0; i < resultado.length; i++) {
+    for (let j = 0; j < resultado[i].length; j++) {
+      // Multiplico cada color (R, G, B) por el factor de brillo
+      // Si factor es 1.5, cada color se hace 1.5 veces más brillante
+      // Si factor es 0.5, cada color se hace más oscuro (la mitad)
+      resultado[i][j].r = limitarValorColor(matriz[i][j].r * factor);
+      resultado[i][j].g = limitarValorColor(matriz[i][j].g * factor);
+      resultado[i][j].b = limitarValorColor(matriz[i][j].b * factor);
+      // El alpha (transparencia) NO se toca, sino se vería raro
+    }
+  }
+  
+  return resultado;
 }
 
 /**
