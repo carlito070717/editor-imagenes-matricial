@@ -598,9 +598,65 @@ function aplicarSepia(matriz) {
  * const bordes = detectarBordes(matriz, 50);
  */
 function detectarBordes(matriz, umbral = 50) {
-  // TODO: Implementar detección de bordes
+  // PASO 1: Convertir a escala de grises primero
+  // Los bordes se detectan mejor en imágenes grises porque solo nos importa
+  // la INTENSIDAD de luz, no el color
+  const grises = convertirEscalaGrises(matriz);
   
-  return []; // REEMPLAZAR
+  const filas = grises.length;
+  const columnas = grises[0].length;
+  
+  // PASO 2: Crear matriz resultado (inicialmente todo negro)
+  const resultado = [];
+  for (let i = 0; i < filas; i++) {
+    const fila = [];
+    for (let j = 0; j < columnas; j++) {
+      fila.push({ r: 0, g: 0, b: 0, a: 255 }); // Negro
+    }
+    resultado.push(fila);
+  }
+  
+  // PASO 3: Recorrer cada pixel (excepto los del borde de la imagen)
+  // Empiezo en 1 y termino en filas-1 porque necesito comparar con vecinos
+  // Si empezara en 0, no tendría vecino de arriba, y me daría error
+  for (let i = 1; i < filas - 1; i++) {
+    for (let j = 1; j < columnas - 1; j++) {
+      
+      // OPERADOR SOBEL SIMPLIFICADO
+      // El operador Sobel detecta cambios bruscos de intensidad
+      // Compara el pixel actual con sus 8 vecinos
+      
+      // Calculo diferencia HORIZONTAL (izquierda vs derecha)
+      // Si hay mucha diferencia entre izquierda y derecha, hay un borde vertical
+      const gx = 
+        // Columna derecha (suma de 3 pixeles de la derecha)
+        grises[i-1][j+1].r + grises[i][j+1].r + grises[i+1][j+1].r -
+        // Columna izquierda (resta de 3 pixeles de la izquierda)
+        (grises[i-1][j-1].r + grises[i][j-1].r + grises[i+1][j-1].r);
+      
+      // Calculo diferencia VERTICAL (arriba vs abajo)
+      // Si hay mucha diferencia entre arriba y abajo, hay un borde horizontal
+      const gy = 
+        // Fila de abajo (suma de 3 pixeles de abajo)
+        grises[i+1][j-1].r + grises[i+1][j].r + grises[i+1][j+1].r -
+        // Fila de arriba (resta de 3 pixeles de arriba)
+        (grises[i-1][j-1].r + grises[i-1][j].r + grises[i-1][j+1].r);
+      
+      // Calculo la MAGNITUD del gradiente usando Pitágoras
+      // Es como calcular la hipotenusa: √(gx² + gy²)
+      // Esto me dice QUÉ TAN FUERTE es el borde
+      const magnitud = Math.sqrt(gx * gx + gy * gy);
+      
+      // Si la magnitud es mayor que el umbral, HAY UN BORDE
+      // Entonces pinto el pixel de BLANCO, sino lo dejo NEGRO
+      if (magnitud > umbral) {
+        resultado[i][j] = { r: 255, g: 255, b: 255, a: 255 }; // Blanco = borde
+      }
+      // Si no supera el umbral, ya está negro por default
+    }
+  }
+  
+  return resultado;
 }
 
 // ============================================
