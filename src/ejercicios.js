@@ -87,7 +87,7 @@ function imagenAMatriz(rutaImagen) {
   return matriz;
 }
 
-/**
+/** 
  * Ejercicio 1.2: Convertir matriz de píxeles a imagen PNG (5 puntos)
  * 
  * Proceso inverso: tomar una matriz de píxeles y guardarla como PNG.
@@ -99,16 +99,46 @@ function imagenAMatriz(rutaImagen) {
  * - Usa new PNG({width, height}) para crear la imagen
  * - Recorre la matriz y llena png.data con los valores
  * - Usa PNG.sync.write(png) para generar el buffer
- * - Usa fs.writeFileSync() para guardar el archivo
+ * - Usa fs.writeFileSync() para guardar el archivo 
  * 
  * @example
  * const matriz = imagenAMatriz('entrada.png');
  * matrizAImagen(matriz, 'imagenes/salida/copia.png');
  */
 function matrizAImagen(matriz, rutaSalida) {
-  // TODO: Implementar la conversión de matriz a PNG
+  // Validar que la matriz no esté vacía
+  validarMatriz(matriz);
   
-  // ESCRIBE TU CÓDIGO AQUÍ
+  // Obtener las dimensiones de la matriz (filas y columnas)
+  const dims = obtenerDimensiones(matriz);
+  
+  // Crear un nuevo objeto PNG con las dimensiones obtenidas
+  const png = new PNG({
+    width: dims.columnas,
+    height: dims.filas
+  });
+  
+  // Llenar el buffer png.data recorriendo cada pixel de la matriz
+  for (let y = 0; y < dims.filas; y++) {
+    for (let x = 0; x < dims.columnas; x++) {
+      // Calcular el índice en el buffer (mismo cálculo que en imagenAMatriz)
+      const idx = (dims.columnas * y + x) * 4;
+      const pixel = matriz[y][x];
+      
+      // Asignar cada componente RGBA al buffer, limitando valores entre 0-255
+      png.data[idx] = limitarValorColor(pixel.r);
+      png.data[idx + 1] = limitarValorColor(pixel.g);
+      png.data[idx + 2] = limitarValorColor(pixel.b);
+      png.data[idx + 3] = limitarValorColor(pixel.a);
+    }
+  }
+  
+  // Asegurar que el directorio de salida existe
+  asegurarDirectorio(path.dirname(rutaSalida));
+  
+  // Convertir el PNG a buffer y guardarlo en el archivo
+  const buffer = PNG.sync.write(png);
+  fs.writeFileSync(rutaSalida, buffer);
 }
 
 /**
