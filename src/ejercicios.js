@@ -480,9 +480,49 @@ function rotar90Grados(matriz) {
  * const mezcla = mezclarImagenes(imagen1, imagen2, 0.5); // 50/50
  */
 function mezclarImagenes(matriz1, matriz2, factor) {
-  // TODO: Implementar mezcla de imágenes
+  // Primero checo que las dos imágenes tengan el mismo tamaño
+  // No puedes mezclar una foto de 100x100 con una de 200x300
+  const dims1 = obtenerDimensiones(matriz1);
+  const dims2 = obtenerDimensiones(matriz2);
   
-  return []; // REEMPLAZAR
+  if (dims1.filas !== dims2.filas || dims1.columnas !== dims2.columnas) {
+    throw new Error('Las imágenes deben tener el mismo tamaño');
+  }
+  
+  // Creo la matriz resultado
+  const resultado = copiarMatriz(matriz1);
+  
+  // Recorro cada pixel de ambas imágenes
+  for (let i = 0; i < dims1.filas; i++) {
+    for (let j = 0; j < dims1.columnas; j++) {
+      // Aquí está la fórmula mágica de mezcla:
+      // Cada color = (color1 × peso1) + (color2 × peso2)
+      // donde peso1 = (1 - factor) y peso2 = factor
+      
+      // Si factor = 0.3:
+      //   peso1 = 0.7 (70% de imagen1)
+      //   peso2 = 0.3 (30% de imagen2)
+      
+      // Si factor = 0.5:
+      //   peso1 = 0.5 (50% de imagen1)
+      //   peso2 = 0.5 (50% de imagen2)
+      
+      resultado[i][j].r = limitarValorColor(
+        matriz1[i][j].r * (1 - factor) + matriz2[i][j].r * factor
+      );
+      resultado[i][j].g = limitarValorColor(
+        matriz1[i][j].g * (1 - factor) + matriz2[i][j].g * factor
+      );
+      resultado[i][j].b = limitarValorColor(
+        matriz1[i][j].b * (1 - factor) + matriz2[i][j].b * factor
+      );
+      resultado[i][j].a = limitarValorColor(
+        matriz1[i][j].a * (1 - factor) + matriz2[i][j].a * factor
+      );
+    }
+  }
+  
+  return resultado;
 }
 
 /**
