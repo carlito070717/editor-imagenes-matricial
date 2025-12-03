@@ -1,6 +1,6 @@
 // ============================================
 // EDITOR DE IMÁGENES CON ÁLGEBRA MATRICIAL
-// ============================================
+// ===========================================
 // Nombre del estudiante: Carlos Alfonso Llanes
 // Fecha: 12/11/2025
  // Grupo: C
